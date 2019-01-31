@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style type="text/css">
+      li {
+        background: #ffdd55;
+        color: #444;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      區域:
+      <select v-model="area">
+        <option value="">全部</option>
+        <option v-for="(count,key) in areaCount" :value="key"
+          >{{ key }}{{ count }}</option
+        > </select
+      ><br />
+      <ol>
+        <li v-for="item in areaFilter">
+          {{ item.dataTime }}{{ item.locationName }}<br />
+          濕度百分比:{{ item.value }}
+        </li>
+      </ol>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.22/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vuex/3.1.0/vuex.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+    <script>
+      let app = new Vue({
+        el:'#app',
+        data() {
+          return {
+           area: '',
+           newList:[]
+          }
+        },
+        computed: {
+          areaFilter() {
+            if (this.area == '') return this.newList
+            return this.newList.filter((item) => {
+              return item.locationName == this.area
+            })
+          },
+          dataTimeFilter() {
+            return areaFilter.filter((item) => {
+              return item.dataTime == this.classType
+            })
+        },
+        areaCount() {
+            let obj = {}
+            this.newList.forEach((item) => {
+              if (!obj[item.locationName]) obj[item.locationName] = 1
+              else obj[item.locationName] += 1
+            })
+            return obj
+          },
+        },
+        mounted() {
+          axios.get('https://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=c73a9461-91c8-4e5c-b728-86b6feb24ffb')
+          .then((res) =>{this.newList = res.data.result.results})
+          .catch((err) =>{console.log(err)})
+        }
+      })
+    </script>
+  </body>
+</html>
