@@ -4,5 +4,5 @@
 這時可確認api資料成功介接，總數為288比資料。<br/>
 稍微透過`filter`篩選區域，最終成果可選擇區域得知該區域特定時間濕度。
 ![img](https://github.com/EddieLiu58/Vue-axios-demo/blob/master/axios.PNG)<br/>
-demo:
-https://eddieliu58.github.io/Vue-axios-demo/
+api: https://data.taipei/opendata/datalist/apiAccess?scope=resourceAquire&rid=c73a9461-91c8-4e5c-b728-86b6feb24ffb<br/>
+demo:https://eddieliu58.github.io/Vue-axios-demo/
